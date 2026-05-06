@@ -1,0 +1,201 @@
+/* Dashboard Styles */
+.dashboard {
+  min-height: 100vh;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dashboard-light {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+}
+
+.dashboard-dark {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: #ffffff;
+}
+
+.dashboard-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  letter-spacing: -0.5px;
+}
+
+/* Clock Styles */
+.clock-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.clock-label {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.clock-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Courier New', Courier, monospace;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 30px 50px;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.clock-time {
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.clock-separator {
+  font-size: 3rem;
+  font-weight: 700;
+  animation: blink 1s infinite;
+  opacity: 0.8;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.clock-ampm {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-left: 10px;
+  opacity: 0.8;
+}
+
+/* Controls Styles */
+.controls-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.control-section {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.control-label {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.button-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.control-button {
+  padding: 12px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.control-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.control-button:active {
+  transform: translateY(0);
+}
+
+.control-button.active {
+  background: #ffffff;
+  color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.control-button.active:hover {
+  background: #f0f0f0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-title {
+    font-size: 2rem;
+  }
+
+  .clock-display {
+    padding: 20px 30px;
+  }
+
+  .clock-time {
+    font-size: 2.5rem;
+  }
+
+  .clock-separator {
+    font-size: 2rem;
+  }
+
+  .clock-ampm {
+    font-size: 1rem;
+  }
+
+  .controls-container {
+    padding: 25px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .button-group {
+    width: 100%;
+  }
+
+  .control-button {
+    flex: 1;
+    min-width: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .clock-time {
+    font-size: 1.8rem;
+  }
+
+  .clock-separator {
+    font-size: 1.5rem;
+  }
+
+  .clock-ampm {
+    font-size: 0.9rem;
+  }
+}

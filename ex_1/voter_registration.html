@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voter Registration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --ink: #1a1a2e;
+            --cream: #f8f5ef;
+            --gold: #c9a84c;
+            --gold-light: #e8d5a3;
+            --green: #2d6a4f;
+            --green-hover: #40916c;
+            --muted: #7a7a8c;
+            --border: #ddd8cd;
+            --white: #ffffff;
+            --error: #c0392b;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--cream);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(201,168,76,0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(45,106,79,0.08) 0%, transparent 40%);
+        }
+
+        .card {
+            background: var(--white);
+            width: 100%;
+            max-width: 520px;
+            border-radius: 2px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04), 0 12px 40px rgba(0,0,0,0.08);
+            overflow: hidden;
+            animation: rise 0.6s ease both;
+        }
+
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-header {
+            background: var(--ink);
+            padding: 36px 40px 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-header::before {
+            content: '';
+            position: absolute;
+            top: -40px; right: -40px;
+            width: 180px; height: 180px;
+            border-radius: 50%;
+            border: 2px solid rgba(201,168,76,0.2);
+        }
+        .card-header::after {
+            content: '';
+            position: absolute;
+            bottom: -60px; left: -20px;
+            width: 140px; height: 140px;
+            border-radius: 50%;
+            border: 1px solid rgba(201,168,76,0.12);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(201,168,76,0.15);
+            border: 1px solid rgba(201,168,76,0.3);
+            color: var(--gold);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin-bottom: 14px;
+        }
+
+        .badge-dot {
+            width: 6px; height: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+        }
+
+        .card-header h1 {
+            font-family: 'Playfair Display', serif;
+            color: var(--white);
+            font-size: 28px;
+            line-height: 1.25;
+            position: relative;
+        }
+
+        .card-header p {
+            color: rgba(255,255,255,0.45);
+            font-size: 13px;
+            margin-top: 6px;
+            font-weight: 300;
+            position: relative;
+        }
+
+        .divider-line {
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
+            margin-top: 20px;
+            width: 60px;
+        }
+
+        .card-body {
+            padding: 36px 40px 40px;
+        }
+
+        .section-label {
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin: 28px 0 14px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-label:first-child { margin-top: 0; }
+
+        .field-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .field { margin-bottom: 16px; }
+        .field.full { grid-column: 1 / -1; }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--muted);
+            letter-spacing: 0.5px;
+            margin-bottom: 7px;
+            text-transform: uppercase;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            color: var(--ink);
+            background: #fdfcfa;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+            appearance: none;
+        }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        input[type="number"]:focus,
+        textarea:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
+            background: var(--white);
+        }
+
+        input[readonly] {
+            background: #f0ede8;
+            color: var(--muted);
+            cursor: not-allowed;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            margin-top: 28px;
+            background: var(--green);
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.25s, transform 0.15s, box-shadow 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            background: var(--green-hover);
+            box-shadow: 0 6px 20px rgba(45,106,79,0.3);
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:active { transform: translateY(0); }
+
+        .submit-btn::after {
+            content: '→';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: opacity 0.2s, right 0.2s;
+        }
+
+        .submit-btn:hover::after {
+            opacity: 1;
+            right: 16px;
+        }
+
+        #error {
+            margin-top: 14px;
+            padding: 10px 14px;
+            border-left: 3px solid var(--error);
+            background: rgba(192,57,43,0.06);
+            color: var(--error);
+            font-size: 13px;
+            border-radius: 0 4px 4px 0;
+            display: none;
+        }
+
+        #error.visible { display: block; }
+
+        .footer-note {
+            text-align: center;
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 20px;
+            letter-spacing: 0.3px;
+        }
+
+        .footer-note span {
+            color: var(--gold);
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <div class="card-header">
+        <div class="badge"><span class="badge-dot"></span> Official Portal</div>
+        <h1>Voter Registration</h1>
+        <p>Complete all fields to register as a voter</p>
+        <div class="divider-line"></div>
+    </div>
+
+    <div class="card-body">
+        <form onsubmit="return validateForm()">
+
+            <div class="section-label">Personal Information</div>
+
+            <div class="field-group">
+                <div class="field">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="Your full name">
+                </div>
+                <div class="field">
+                    <label for="gender">Gender</label>
+                    <input type="text" id="gender" placeholder="e.g. Male / Female">
+                </div>
+                <div class="field">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob" onchange="calculateAge()">
+                </div>
+                <div class="field">
+                    <label for="age">Age</label>
+                    <input type="text" id="age" readonly placeholder="Auto-calculated">
+                </div>
+            </div>
+
+            <div class="section-label">Contact Details</div>
+
+            <div class="field-group">
+                <div class="field full">
+                    <label for="email">Email Address</label>
+                    <input type="text" id="email" placeholder="you@example.com">
+                </div>
+                <div class="field full">
+                    <label for="phone">Phone Number</label>
+                    <input type="text" id="phone" maxlength="10" placeholder="10-digit mobile number">
+                </div>
+                <div class="field full">
+                    <label for="address">Residential Address</label>
+                    <textarea id="address" placeholder="Door no., Street, City, State, PIN"></textarea>
+                </div>
+            </div>
+
+            <div class="section-label">Identity Documents</div>
+
+            <div class="field-group">
+                <div class="field">
+                    <label for="aadharnumber">Aadhaar Number</label>
+                    <input type="number" id="aadharnumber" placeholder="12-digit number">
+                </div>
+                <div class="field">
+                    <label for="voterid">Voter ID</label>
+                    <input type="number" id="voterid" placeholder="10-digit ID">
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">Register Now</button>
+
+            <p id="error"></p>
+            <p class="footer-note">Your data is protected under <span>Election Commission guidelines</span></p>
+        </form>
+    </div>
+</div>
+
+<script>
+function calculateAge() {
+    var dob = document.getElementById("dob").value;
+    if (dob == "") { document.getElementById("age").value = ""; return; }
+    var birthYear = dob.substring(0, 4);
+    var currentYear = new Date().getFullYear();
+    var age = currentYear - birthYear;
+    var agemonth = new Date().getMonth() - new Date(dob).getMonth();
+    if (agemonth < 0 || (agemonth === 0 && new Date().getDate() < new Date(dob).getDate())) age--;
+    document.getElementById("age").value = age;
+}
+
+function showError(msg) {
+    var err = document.getElementById("error");
+    err.innerHTML = "⚠ " + msg;
+    err.classList.add("visible");
+}
+
+function validateForm() {
+    var name        = document.getElementById("name").value.trim();
+    var email       = document.getElementById("email").value.trim();
+    var phone       = document.getElementById("phone").value.trim();
+    var gender      = document.getElementById("gender").value.trim();
+    var dob         = document.getElementById("dob").value;
+    var age         = document.getElementById("age").value;
+    var aadhar      = document.getElementById("aadharnumber").value;
+    var voterid     = document.getElementById("voterid").value;
+    var address     = document.getElementById("address").value.trim();
+    var err         = document.getElementById("error");
+
+    err.classList.remove("visible");
+
+    if (name == "")                         { showError("Name is required"); return false; }
+    if (email == "")                        { showError("Email is required"); return false; }
+    if (!/^\d{10}$/.test(phone))            { showError("Phone number must be exactly 10 digits"); return false; }
+    if (gender == "")                       { showError("Please enter gender"); return false; }
+    if (dob == "")                          { showError("Date of Birth is required"); return false; }
+    if (age < 18)                           { showError("You must be 18 or above to vote"); return false; }
+    if (aadhar.length != 12)                { showError("Aadhaar number must be 12 digits"); return false; }
+    if (voterid.length != 10)              { showError("Voter ID must be 10 digits"); return false; }
+    if (address == "")                      { showError("Address is required"); return false; }
+
+    alert("✓ Registration Successful! Welcome aboard.");
+    
+    return true;
+}
+</script>
+</body>
+</html>
